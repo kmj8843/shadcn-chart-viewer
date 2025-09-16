@@ -1,9 +1,9 @@
 "use client";
 
-import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
+import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { Option } from "@/components/app-sidebar";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -18,11 +18,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-type Option = {
-  value: string;
-  label: string;
-};
+import { cn } from "@/lib/utils";
 
 export function Combobox({
   placeholder,

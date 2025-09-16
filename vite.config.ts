@@ -10,7 +10,7 @@ export default defineConfig({
   },
   plugins: [
     tsConfigPaths(),
-    tanstackStart({ customViteReactPlugin: true, spa: { enabled: true } }),
+    tanstackStart({ customViteReactPlugin: true }),
     viteReact(),
     tailwindcss(),
   ],

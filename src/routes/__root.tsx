@@ -1,14 +1,14 @@
-import type { ReactNode } from "react";
-import {
-  Outlet,
-  createRootRoute,
-  HeadContent,
-  Scripts,
-  DefaultGlobalNotFound,
-} from "@tanstack/react-router";
-import appCss from "@/styles/app.css?url";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import appCss from "@/styles/app.css?url";
+import {
+  createRootRoute,
+  DefaultGlobalNotFound,
+  HeadContent,
+  Outlet,
+  Scripts,
+} from "@tanstack/react-router";
+import type { ReactNode } from "react";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -28,6 +28,9 @@ export const Route = createRootRoute({
   }),
   component: RootComponent,
   notFoundComponent: DefaultGlobalNotFound,
+  pendingComponent: () => (
+    <div className="absolute top-0 left-0 w-full">Loading</div>
+  ),
 });
 
 function RootComponent() {

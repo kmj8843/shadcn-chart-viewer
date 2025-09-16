@@ -1,7 +1,5 @@
 "use client";
 
-import * as React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -16,6 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useEffect, useState } from "react";
 
 type Option = {
   value: string;
@@ -25,15 +24,26 @@ type Option = {
 export function ComboboxPopover({
   label,
   options,
-  selectedOption,
-  setSelectedOption,
+  defaultValue,
+  onSelect,
 }: {
   label: string;
   options: Option[] | null;
-  selectedOption?: Option | null;
-  setSelectedOption?: React.Dispatch<React.SetStateAction<Option | null>>;
+  defaultValue?: string;
+  onSelect?: (v: string) => void;
 }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [option, setOption] = useState<Option | null>(null);
+
+  useEffect(() => {
+    setOption(options?.find((o) => o.value === defaultValue) || null);
+  }, [defaultValue]);
+
+  useEffect(() => {
+    if (onSelect && option) {
+      onSelect(option.value);
+    }
+  }, [option]);
 
   return (
     <div className="flex items-center space-x-4 justify-center">
@@ -41,11 +51,7 @@ export function ComboboxPopover({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-[150px] justify-start">
-            {selectedOption ? (
-              <>{selectedOption.label}</>
-            ) : (
-              <>+ Choose {label}</>
-            )}
+            {option ? <>{option.label}</> : <>+ Choose {label}</>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" side="right" align="start">
@@ -59,7 +65,7 @@ export function ComboboxPopover({
                     key={option.value}
                     value={option.value}
                     onSelect={(value) => {
-                      setSelectedOption?.(
+                      setOption?.(
                         options.find((priority) => priority.value === value) ||
                           null,
                       );
